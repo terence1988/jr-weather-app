@@ -7,6 +7,11 @@ export default class SetStagePage extends Component {
 			counter : 0
 		};
 	}
+componentDidMount() {
+  document.getElementById('eventLinstener').addEventListener('click',this.setCounter)
+}
+
+
 
   changeValue = v => {
     this.setState ({

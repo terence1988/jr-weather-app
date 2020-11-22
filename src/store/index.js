@@ -1,3 +1,15 @@
-import {createStore} from "redux";
+import { createStore } from "redux";
+//define state initial value and setState rule
+function counterReducer(state=0,action) {
+  switch (action.type) {
+    case "ADD":
+      return state + 1;
+    case "MINUS":
+        return state - 1;
+    default:
+        return state;
+  }
+}
+const store = createStore(counterReducer);
 
-const store = createStore
+export default store;
