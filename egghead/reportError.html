@@ -1,0 +1,65 @@
+<body>
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script src="https://unpkg.com/react-error-boundary@1.2.5/dist/umd/react-error-boundary.js"></script>
+	<script type="text/babel">
+		// This is recommended:
+		const ErrorBoundary = ReactErrorBoundary.ErrorBoundary;
+		// error boundaries need to be a class component
+		// returning this.props.children
+
+		// class ErrorBoundary extends React.Component {
+		//   state = {error: null}
+		//   static getDerivedStateFromError(error) {
+		//     return {error}
+		//   }
+		//   render() {
+		//     const {error} = this.state
+		//     if (error) {
+		//       return <this.props.FallbackComponent error={error} />
+		//     }
+
+		//     return this.props.children
+		//   }
+		// }
+
+		//error boundary is the name for fallback frontend render() function
+
+		function ErrorFallback({ error }) {
+			return (
+				<div>
+					{/* controlling error by ErrorBoundary */}
+					<p>Something went wrong:</p>
+					<pre>{error.message}</pre>
+				</div>
+			);
+		}
+
+		function Bomb() {
+			// when this function is called, it throws an error
+			throw new Error("💥 CABOOM 💥");
+			// Note that error boundaries only catch errors in the components below them in the tree.
+		}
+
+		function App() {
+			const [explode, setExplode] = React.useState(false);
+			return (
+				<div>
+					<div>
+						<button onClick={() => setExplode(true)}>💣</button>
+					</div>
+					<div>
+						{/* controlling error by ErrorBoundary */}
+						{/* + providing ErrorFallback */}
+						<ErrorBoundary FallbackComponent={ErrorFallback}>
+							{explode ? <Bomb /> : "Push the button Max!"}
+						</ErrorBoundary>
+					</div>
+				</div>
+			);
+		}
+		ReactDOM.render(<App />, document.getElementById("root"));
+	</script>
+</body>

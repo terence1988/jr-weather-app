@@ -1,0 +1,40 @@
+<body>
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+	<script type="text/babel">
+		function UsernameForm() {
+		  // When submitting a form, it automatically makes a post request with the data
+		  function handleSubmit(event) {
+		    // preventing from automatically sending a post request/full page refresh
+		    event.preventDefault();
+		    // Please don't use this:
+		    // document.querySelector('input').value, this breaks the encapsulation
+
+		    // we can access the form element directly, console.dir(event.target)
+		    // one option: const username = event.target[0].value
+		    // If ref is not needed, then use the id
+		    const username = event.target.elements.usernameInput.value;
+		    // Alerting this to users or sending this to backend server
+		    alert(`You entered: ${username}`);
+		  }
+
+		  return (
+		     {/* Creating a form  */}
+		    <form onSubmit={handleSubmit}>
+		      <div>
+		        {/* adding a label - htmlFor="usernameInput" */}
+		        <label htmlFor="usernameInput">Username:</label>
+		        <input id="usernameInput" type="text" />
+		      </div>
+		      {/* Forms are automatically submitted on type="submit*/}
+		      {/* Make sure to specify the type on the button */}
+		      <button type="submit">Submit</button>
+		    </form>
+		  );
+		}
+
+		ReactDOM.render(<UsernameForm />, document.getElementById('root'));
+	</script>
+</body>
